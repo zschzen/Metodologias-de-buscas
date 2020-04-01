@@ -29,10 +29,10 @@ namespace TreeStructure
         /// </summary>
         /// <param name="data">Dado a ser registrado no módulo</param>
         /// <param name="parent">Nódulo pai. deixar nulo para nódulo raiz</param>
-        public Node (T data, Node<T> parent = null)
+        public Node(T data, Node<T> parent = null)
         {
             this.Data = data;
-            this.Children = new List<Node<T>> ();
+            this.Children = new List<Node<T>>();
             this.Parent = parent;
         }
 
@@ -41,10 +41,10 @@ namespace TreeStructure
         /// </summary>
         /// <param name="child">Dados a serem adicionados</param>
         /// <returns>Nódulo filho criado</returns>
-        public Node<T> AddChild (T child)
+        public Node<T> AddChild(T child)
         {
-            Node<T> newChild = new Node<T> (child, this);
-            this.Children.Add (newChild);
+            Node<T> newChild = new Node<T>(child, this);
+            this.Children.Add(newChild);
 
             return newChild;
         }
@@ -53,7 +53,7 @@ namespace TreeStructure
         /// Partindo do nódulo atual, calcula o tamanho total da árvore
         /// </summary>
         /// <returns>Inteiro representando o tamanho da árvore</returns>
-        public int GetHeight ()
+        public int GetHeight()
         {
             int height = 1;
             Node<T> current = this;
@@ -75,22 +75,22 @@ namespace TreeStructure
         /// </summary>
         /// <param name="reverse">true para um caminho descendente</param>
         /// <returns>Lista de nódulos representando o caminho partindo do nódulo raiz</returns>
-        public List<Node<T>> GetRootPath (bool reverse = false)
+        public List<Node<T>> GetRootPath(bool reverse = false)
         {
             var current = this;
-            List<Node<T>> path = new List<Node<T>> ();
+            List<Node<T>> path = new List<Node<T>>();
 
             do
             {
-                path.Add (current);
+                path.Add(current);
                 current = current.Parent;
             } while (current.Parent != null);
 
             // add root
-            path.Add (current);
+            path.Add(current);
 
             if (reverse)
-                path.Reverse ();
+                path.Reverse();
 
             return path;
         }
@@ -99,7 +99,7 @@ namespace TreeStructure
         /// Relata os dados do objeto nódulo como string
         /// </summary>
         /// <returns>Dado registrado no nódulo</returns>
-        public override string ToString ()
+        public override string ToString()
         {
             return $"Node: {Data.ToString()}, Height: {GetHeight()}";
         }
@@ -113,6 +113,13 @@ namespace TreeStructure
     {
         public Node<T> Root { get; set; }
 
+        private List<Node<T>> visitados;
+
+        public Tree()
+        {
+            visitados = new List<Node<T>>();
+        }
+
         #region Search
 
         /// <summary>
@@ -121,32 +128,57 @@ namespace TreeStructure
         /// <param name="node">Nódulo pai para início da busca</param>
         /// <param name="match">Condição de iltragem</param>
         /// <returns>Nódulo encontrado na busca</returns>
-        public Node<T> Profundidade (Node<T> node, System.Predicate<Node<T>> match)
+        public Node<T> Profundidade(Node<T> node, System.Predicate<Node<T>> match)
         {
-            var fila = new Stack<Node<T>> ();
+            var fila = new Stack<Node<T>>();
             // adiciona o nódulo raiz no topo da lista
-            fila.Push (node);
+            fila.Push(node);
 
             Node<T> current;
 
-            while (fila.Count > 0)
+            while (fila.Any())
             {
                 // retira da fila e o retorna
-                current = fila.Pop ();
+                current = fila.Pop();
 
-                if (match (current)) return current;
+                if (match(current)) return current;
 
                 if (current.Children == null) continue;
 
                 // reverse garante um caminho da esquerda para direita
-                foreach (Node<T> child in current.Children.Reverse ())
-                    fila.Push (child);
+                foreach (Node<T> child in current.Children.Reverse())
+                    fila.Push(child);
 
 #if DEBUG
-                System.Diagnostics.Debug.WriteLine (current.ToString ());
+                System.Diagnostics.Debug.WriteLine(current.ToString());
 #endif
             } // while
             return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="match"></param>
+        /// <returns></returns>
+        public Node<T> ProfundidadeRecursiva(Node<T> node, System.Predicate<Node<T>> match)
+        {
+            if (match(node)) return node;
+            visitados.Remove(node);
+            foreach (Node<T> child in node.Children)
+            {
+                visitados.Add(child);
+            }
+
+            while (visitados.Count > 0)
+            {
+                if (ProfundidadeRecursiva(visitados[0], match) != null) return visitados[0];
+                visitados.RemoveAt(0);
+            }
+
+            return null;
+
         }
 
         #endregion
