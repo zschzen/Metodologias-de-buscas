@@ -16,7 +16,7 @@ namespace TreeStructure
 
         public T Data { get; set; }                         // Dado do nódulo
         public Node<T> Parent { get; set; }                 // Nódulo pai
-        public ICollection<Node<T>> Children { get; set; }  // Lista de nódulos filhos
+        public ICollection<Node<T>> Children { get; set; }  // Implementação da lista de nódulos filhos
 
         #endregion
 
@@ -69,12 +69,7 @@ namespace TreeStructure
         /// <returns>Dado registrado no nódulo</returns>
         public override string ToString()
         {
-            if (this.Data != null)
-            {
-                string strBase = "Node Data = {0}\nParent Data = {1}\nHeight = {2}";
-                return string.Format(strBase, this.Data, this.Parent.Data, this.GetHeight());
-            }
-            else return "[data null]";
+            return $"Node: {Data}, Parent: {Parent.Data}, Height: {GetHeight()}";
         }
     }
 

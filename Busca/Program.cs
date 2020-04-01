@@ -10,18 +10,21 @@ namespace Busca
 
             Tree<int> tree = new Tree<int>();
 
-            /*
-            *                25
-            *              /    \
-            *             /      \ 
-            *            20       36
-            *           /  \     /  \    
-            *          10   22  30   \
-            *         /  \      |     40   
-            *        5    12    28   /  \
-            *       / \   |         38  48
-            *      1   8  15           /  \
-            *                        45    50
+            /* 
+            * TREE
+            * dataNODE_LETTER
+            * 
+            *                25root
+            *              /      \
+            *             /        \ 
+            *            20a        36b
+            *           /   \      /   \    
+            *          10c   22d  30e   \
+            *         /   \       |      40f   
+            *        5g    12h    28i   /   \
+            *       /  \    |          38j  48k
+            *      1l   8m  15n            /   \
+            *                             45o   50p
             */
 
             tree.Root = new Node<int>(25);
@@ -50,6 +53,8 @@ namespace Busca
 
             Node<int> nodeO = nodeK.AddChild(45);
             Node<int> nodeP = nodeK.AddChild(50);
+
+            Console.WriteLine(nodeP.ToString()); // for test, print nodeP
 
             Console.ReadKey();
         }
