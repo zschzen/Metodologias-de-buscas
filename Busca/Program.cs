@@ -52,12 +52,12 @@ namespace Busca
             var nodeQ = nodeK.AddChild(50);
 
             Console.WriteLine("Insira o dado int que deseja buscar:");
-            int dataToSearch = Int32.Parse(Console.ReadLine());
+            //int dataToSearch = Int32.Parse(Console.ReadLine());
 
             // para fins de medição
             System.Diagnostics.Stopwatch stopwatch = null;
 
-            Predicate<Node<int>> match = (Node<int> node) => node.Data == dataToSearch;
+            Predicate<Node<int>> match = (Node<int> node) => node.Data == 10;
 
             Console.WriteLine("\nInsira o modo de busca:");
             Console.WriteLine("0 - Profundidade usando pilhas");
@@ -65,7 +65,8 @@ namespace Busca
 
             Node<int> result = default(Node<int>);
 
-            switch (Int32.Parse(Console.ReadLine()))
+            //switch (Int32.Parse(Console.ReadLine()))
+            switch (2)
             {
                 case 0:
                     stopwatch = System.Diagnostics.Stopwatch.StartNew();
@@ -74,6 +75,11 @@ namespace Busca
                 case 1:
                     stopwatch = System.Diagnostics.Stopwatch.StartNew();
                     result = tree.ProfundidadeRecursiva(tree.Root, match);
+                    break;
+
+                case 2:
+                    stopwatch = System.Diagnostics.Stopwatch.StartNew();
+                    result = tree.Largura(tree.Root, match);
                     break;
 
                 default:

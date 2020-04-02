@@ -178,7 +178,31 @@ namespace TreeStructure
             }
 
             return null;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="match"></param>
+        /// <returns></returns>
+        public Node<T> Largura(Node<T> node, System.Predicate<Node<T>> match)
+        {
+            var fila = new List<Node<T>>();
+            var estado = node;
 
+            while (true)
+            {
+                if (match(estado)) return estado;
+
+                foreach (Node<T> child in estado.Children)
+                    fila.Add(child);
+
+                if (fila.Count <= 0) return null;
+
+                estado = fila[0];
+                fila.RemoveAt(0);
+            }
         }
 
         #endregion
