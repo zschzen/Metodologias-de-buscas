@@ -101,7 +101,7 @@ namespace TreeStructure
         /// <returns>Dado registrado no nódulo</returns>
         public override string ToString()
         {
-            return $"Node: {Data.ToString()}, Height: {GetHeight()}";
+            return $"Node: {Data}, Height: {GetHeight()}";
         }
     }
 
@@ -113,7 +113,7 @@ namespace TreeStructure
     {
         public Node<T> Root { get; set; }
 
-        private List<Node<T>> visitados;
+        private readonly List<Node<T>> visitados;
 
         public Tree()
         {
@@ -157,11 +157,11 @@ namespace TreeStructure
         }
 
         /// <summary>
-        /// 
+        /// Busca recursiva em profundidade
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="match"></param>
-        /// <returns></returns>
+        /// <param name="node">Nódulo pai para início da busca</param>
+        /// <param name="match">Condição de iltragem</param>
+        /// <returns>Nódulo encontrado na busca</returns>
         public Node<T> ProfundidadeRecursiva(Node<T> node, System.Predicate<Node<T>> match)
         {
             if (match(node)) return node;
