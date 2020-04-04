@@ -52,7 +52,7 @@ namespace Busca
             var nodeQ = nodeK.AddChild(50);
 
             Console.WriteLine("Insira o dado int que deseja buscar:");
-            //int dataToSearch = Int32.Parse(Console.ReadLine());
+            int dataToSearch = Int32.Parse(Console.ReadLine());
 
             // para fins de medição
             System.Diagnostics.Stopwatch stopwatch = null;
@@ -62,11 +62,11 @@ namespace Busca
             Console.WriteLine("\nInsira o modo de busca:");
             Console.WriteLine("0 - Profundidade usando pilhas");
             Console.WriteLine("1 - Profundidade usando recursividade");
+            Console.WriteLine("2 - Largura");
 
             Node<int> result = default(Node<int>);
 
-            //switch (Int32.Parse(Console.ReadLine()))
-            switch (2)
+            switch (Int32.Parse(Console.ReadLine()))
             {
                 case 0:
                     stopwatch = System.Diagnostics.Stopwatch.StartNew();
@@ -83,7 +83,7 @@ namespace Busca
                     break;
 
                 default:
-                    Console.WriteLine("não reconhecido");
+                    Console.WriteLine("Não reconhecido. Saindo...");
                     System.Environment.Exit(0);
                     break;
             }
