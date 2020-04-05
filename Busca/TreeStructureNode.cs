@@ -6,7 +6,9 @@ namespace TreeStructure
 
     /// <summary>
     /// Classe dedicada aos nódulos da árvore
-    /// Parte dos estudo de Leandro Peres, Março de 2020
+    /// Parte dos estudo de Leandro Peres e Geovani Alves, Março de 2020
+    /// Disciplina: Inteligência Aftificial Aplicada
+    /// Doscente: Gustavo
     /// 
     /// TODO:
     ///     - Revisar e otimizar métodos
@@ -166,6 +168,7 @@ namespace TreeStructure
         {
             if (match(node)) return node;
             visitados.Remove(node);
+
             foreach (Node<T> child in node.Children)
             {
                 visitados.Add(child);

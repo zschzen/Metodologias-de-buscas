@@ -62,6 +62,7 @@ namespace Busca
             Console.WriteLine("\nInsira o modo de busca:");
             Console.WriteLine("0 - Profundidade usando pilhas");
             Console.WriteLine("1 - Profundidade usando recursividade");
+            Console.WriteLine("2 - Largura");
 
             Node<int> result = default(Node<int>);
 
@@ -82,7 +83,7 @@ namespace Busca
                     break;
 
                 default:
-                    Console.WriteLine("não reconhecido");
+                    Console.WriteLine("Não reconhecido. Saindo...");
                     System.Environment.Exit(0);
                     break;
             }
