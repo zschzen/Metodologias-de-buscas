@@ -160,7 +160,7 @@ namespace TreeStructure
         /// Busca recursiva em profundidade
         /// </summary>
         /// <param name="node">Nódulo pai para início da busca</param>
-        /// <param name="match">Condição de iltragem</param>
+        /// <param name="match">Condição de filtragem</param>
         /// <returns>Nódulo encontrado na busca</returns>
         public Node<T> ProfundidadeRecursiva(Node<T> node, System.Predicate<Node<T>> match)
         {
@@ -173,36 +173,42 @@ namespace TreeStructure
 
             while (visitados.Count > 0)
             {
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine(node.ToString());
+#endif
                 if (ProfundidadeRecursiva(visitados[0], match) != null) return visitados[0];
                 visitados.RemoveAt(0);
             }
 
             return null;
         }
-        
+
         /// <summary>
-        /// 
+        /// Busca em largura
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="match"></param>
-        /// <returns></returns>
+        /// <param name="node">Nódulo pai para início da busca</param>
+        /// <param name="match">Condição de filtragem</param>
+        /// <returns>Nódulo encontrado na busca</returns>
         public Node<T> Largura(Node<T> node, System.Predicate<Node<T>> match)
         {
-            var fila = new List<Node<T>>();
-            var estado = node;
+            var fila = new Queue<Node<T>>();
+            fila.Enqueue(node);
 
-            while (true)
+            while (fila.Any())
             {
-                if (match(estado)) return estado;
+                node = fila.Dequeue();
 
-                foreach (Node<T> child in estado.Children)
-                    fila.Add(child);
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine(node.ToString());
+#endif
 
-                if (fila.Count <= 0) return null;
+                if (match(node)) return node;
 
-                estado = fila[0];
-                fila.RemoveAt(0);
+                foreach (Node<T> child in node.Children)
+                    fila.Enqueue(child);
             }
+
+            return default(Node<T>);
         }
 
         #endregion
