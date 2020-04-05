@@ -31,7 +31,7 @@ namespace TreeStructure
         /// </summary>
         /// <param name="data">Dado a ser registrado no módulo</param>
         /// <param name="parent">Nódulo pai. deixar nulo para nódulo raiz</param>
-        public Node(T data, Node<T> parent = null)
+        public Node(T data, Node<T> parent = default(Node<T>))
         {
             this.Data = data;
             this.Children = new List<Node<T>>();
@@ -60,7 +60,7 @@ namespace TreeStructure
             int height = 1;
             Node<T> current = this;
 
-            while (current.Parent != null)
+            while (current.Parent != default(Node<T>))
             {
                 height++;
                 current = current.Parent;
@@ -86,7 +86,7 @@ namespace TreeStructure
             {
                 path.Add(current);
                 current = current.Parent;
-            } while (current.Parent != null);
+            } while (current.Parent != default(Node<T>));
 
             // add root
             path.Add(current);
@@ -145,7 +145,7 @@ namespace TreeStructure
 
                 if (match(current)) return current;
 
-                if (current.Children == null) continue;
+                if (current.Children == default(Node<T>)) continue;
 
                 // reverse garante um caminho da esquerda para direita
                 foreach (Node<T> child in current.Children.Reverse())
@@ -155,7 +155,7 @@ namespace TreeStructure
                 System.Diagnostics.Debug.WriteLine(current.ToString());
 #endif
             } // while
-            return null;
+            return default(Node<T>);
         }
 
         /// <summary>
@@ -179,11 +179,11 @@ namespace TreeStructure
 #if DEBUG
                 System.Diagnostics.Debug.WriteLine(node.ToString());
 #endif
-                if (ProfundidadeRecursiva(visitados[0], match) != null) return visitados[0];
+                if (ProfundidadeRecursiva(visitados[0], match) != default(Node<T>)) return visitados[0];
                 visitados.RemoveAt(0);
             }
 
-            return null;
+            return default(Node<T>);
         }
 
         /// <summary>
