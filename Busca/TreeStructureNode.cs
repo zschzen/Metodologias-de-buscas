@@ -13,7 +13,7 @@ namespace TreeStructure
     /// TODO:
     ///     - Revisar e otimizar métodos
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Tipo aribtrário</typeparam>
     /// <see cref="https://youtube.com/watch?v=K0-qs--naUo"/>
     [System.Serializable]
     public class Node<T>
@@ -112,43 +112,10 @@ namespace TreeStructure
     {
         public Node<T> Root { get; set; }
 
+        #region Search
         private readonly List<Node<T>> visitados;
 
         public Tree() => visitados = new List<Node<T>>();
-
-        #region Search
-
-        /// <summary>
-        /// Busca não recursiva em profundidade
-        /// </summary>
-        /// <param name="node">Nódulo pai para início da busca</param>
-        /// <param name="match">Condição de iltragem</param>
-        /// <returns>Nódulo encontrado na busca</returns>
-        public Node<T> Profundidade(Node<T> node, System.Predicate<Node<T>> match)
-        {
-            var fila = new Stack<Node<T>>();
-            // adiciona o nódulo raiz no topo da lista
-            fila.Push(node);
-
-            Node<T> current;
-
-            while (fila.Any())
-            {
-                // retira da fila e o retorna
-                current = fila.Pop();
-
-                if (match(current)) return current;
-
-                if (current.Children == default(Node<T>)) continue;
-
-                // reverse garante um caminho da esquerda para direita
-                foreach (Node<T> child in current.Children.Reverse())
-                    fila.Push(child);
-
-                System.Console.WriteLine(current.ToString());
-            } // while
-            return default(Node<T>);
-        }
 
         /// <summary>
         /// Busca recursiva em profundidade
@@ -176,13 +143,55 @@ namespace TreeStructure
             return default(Node<T>);
         }
 
+        #endregion
+
+    }
+
+    /// <summary>
+    /// Classe responsável por buscas utilizando métodos de extenção
+    /// </summary>
+    public static class Search
+    {
+
+        /// <summary>
+        /// Busca não recursiva em profundidade
+        /// </summary>
+        /// <param name="node">Nódulo pai para início da busca</param>
+        /// <param name="match">Condição de iltragem</param>
+        /// <returns>Nódulo encontrado na busca</returns>
+        public static Node<T> Profundidade<T>(this Node<T> node, System.Predicate<Node<T>> match)
+        {
+            var fila = new Stack<Node<T>>();
+            // adiciona o nódulo raiz no topo da lista
+            fila.Push(node);
+
+            Node<T> current;
+
+            while (fila.Any())
+            {
+                // retira da fila e o retorna
+                current = fila.Pop();
+
+                if (match(current)) return current;
+
+                if (current.Children == default(Node<T>)) continue;
+
+                // reverse garante um caminho da esquerda para direita
+                foreach (Node<T> child in current.Children.Reverse())
+                    fila.Push(child);
+
+                System.Console.WriteLine(current.ToString());
+            } // while
+            return default(Node<T>);
+        }
+
         /// <summary>
         /// Busca em largura
         /// </summary>
         /// <param name="node">Nódulo pai para início da busca</param>
         /// <param name="match">Condição de filtragem</param>
         /// <returns>Nódulo encontrado na busca</returns>
-        public Node<T> Largura(Node<T> node, System.Predicate<Node<T>> match)
+        public static Node<T> Largura<T>(this Node<T> node, System.Predicate<Node<T>> match)
         {
             var fila = new Queue<Node<T>>();
             fila.Enqueue(node);
@@ -201,8 +210,27 @@ namespace TreeStructure
 
             return default(Node<T>);
         }
+    }
 
-        #endregion
+    public static class Print
+    {
+        /// <summary>
+        /// Método responsável pela representação dos filhos de um nódulo
+        /// </summary>
+        /// <param name="root">Nódulo pai para início da árvore</param>
+        /// <param name="indent">Indentação de cada elemento na árvore</param>
+        /// <param name="last">Caso o último </param>
+        /// <typeparam name="T">Tipo aribtrário</typeparam>
+        /// <see>https://stackoverflow.com/a/8567550</see>
+        public static void PrintTree<T>(this Node<T> root, string indent = "", bool last = true)
+        {
+            System.Console.WriteLine(indent + "+- " + root.Data);
+            indent += last ? "   " : "|  ";
 
+            for (int i = 0; i < root.Children.Count; i++)
+            {
+                PrintTree(root.Children[i], indent, i == root.Children.Count - 1);
+            }
+        }
     }
 }

@@ -9,20 +9,6 @@ namespace Busca
         {
             Tree<int> tree = new Tree<int>();
 
-            /*
-             *                25root
-             *              /       \
-             *             /         \
-             *            20a         36b
-             *           /   \       /   \
-             *          10c   22d   30e   \
-             *         /   \        |      40f
-             *        5g    12h     28i   /   \
-             *       /  \    |           38j   48k
-             *      1l   8m  15n             /  |  \
-             *                              45o 49p 50q
-             */
-
             tree.Root = new Node<int>(25);
 
             var nodeA = tree.Root.AddChild(20);
@@ -51,6 +37,8 @@ namespace Busca
             var nodeP = nodeK.AddChild(49);
             var nodeQ = nodeK.AddChild(50);
 
+            tree.Root.PrintTree();
+
             Console.WriteLine("Insira o dado int que deseja buscar:");
             int dataToSearch = Int32.Parse(Console.ReadLine());
 
@@ -66,21 +54,24 @@ namespace Busca
 
             Node<int> result = default(Node<int>);
 
+            int a = Int32.Parse(Console.ReadLine());
+
             Console.WriteLine("\nPassos:");
-            switch (Int32.Parse(Console.ReadLine()))
+
+            switch (a)
             {
                 case 0:
                     stopwatch = System.Diagnostics.Stopwatch.StartNew();
-                    result = tree.Profundidade(tree.Root, match);
+                    result = tree.Root.Profundidade(match);
                     break;
                 case 1:
                     stopwatch = System.Diagnostics.Stopwatch.StartNew();
-                    result = tree.ProfundidadeRecursiva(tree.Root, match);
+                    result = tree.ProfundidadeRecursiva(tree.Root, match); // revisar
                     break;
 
                 case 2:
                     stopwatch = System.Diagnostics.Stopwatch.StartNew();
-                    result = tree.Largura(tree.Root, match);
+                    result = tree.Root.Largura(match);
                     break;
 
                 default:
