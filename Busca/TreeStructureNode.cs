@@ -8,7 +8,7 @@ namespace TreeStructure
     /// Classe dedicada aos nódulos da árvore
     /// Parte dos estudo de Leandro Peres e Geovani Alves, Março de 2020
     /// Disciplina: Inteligência Aftificial Aplicada
-    /// Doscente: Gustavo
+    /// Docente: Gustavo Siqueira Vinhal
     /// 
     /// TODO:
     ///     - Revisar e otimizar métodos
