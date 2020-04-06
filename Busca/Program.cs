@@ -66,6 +66,7 @@ namespace Busca
 
             Node<int> result = default(Node<int>);
 
+            Console.WriteLine("\nPassos:");
             switch (Int32.Parse(Console.ReadLine()))
             {
                 case 0:
@@ -90,13 +91,15 @@ namespace Busca
 
             if (result != null)
             {
+                Console.WriteLine("\nResultado");
                 Console.WriteLine(result.ToString());
 
-                Console.WriteLine("\nCaminho partindo da raíz:");
+                Console.WriteLine("\nCaminho (em profundidade) partindo da raíz:");
                 foreach (Node<int> parent in result.GetRootPath(true))
                 {
                     Console.WriteLine(parent.ToString());
                 }
+
             }
 
             else Console.WriteLine("Nódulo não encontrado");

@@ -22,7 +22,7 @@ namespace TreeStructure
 
         public T Data { get; set; } // Dado do nódulo
         public Node<T> Parent { get; set; } // Nódulo pai
-        public ICollection<Node<T>> Children { get; set; } // Implementação da lista de nódulos filhos
+        public IList<Node<T>> Children { get; set; } // Implementação da lista de nódulos filhos
 
         #endregion
 
@@ -101,10 +101,7 @@ namespace TreeStructure
         /// Relata os dados do objeto nódulo como string
         /// </summary>
         /// <returns>Dado registrado no nódulo</returns>
-        public override string ToString()
-        {
-            return $"Node: {Data}, Height: {GetHeight()}";
-        }
+        public override string ToString() => $"Node: {Data}, Height: {GetHeight()}";
     }
 
     /// <summary>
@@ -117,10 +114,7 @@ namespace TreeStructure
 
         private readonly List<Node<T>> visitados;
 
-        public Tree()
-        {
-            visitados = new List<Node<T>>();
-        }
+        public Tree() => visitados = new List<Node<T>>();
 
         #region Search
 
@@ -151,9 +145,7 @@ namespace TreeStructure
                 foreach (Node<T> child in current.Children.Reverse())
                     fila.Push(child);
 
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine(current.ToString());
-#endif
+                System.Console.WriteLine(current.ToString());
             } // while
             return default(Node<T>);
         }
@@ -166,19 +158,17 @@ namespace TreeStructure
         /// <returns>Nódulo encontrado na busca</returns>
         public Node<T> ProfundidadeRecursiva(Node<T> node, System.Predicate<Node<T>> match)
         {
+            System.Console.WriteLine(node.ToString());
             if (match(node)) return node;
-            visitados.Remove(node);
 
-            foreach (Node<T> child in node.Children)
+            visitados.Remove(node);
+            foreach (Node<T> child in node.Children.Reverse())
             {
-                visitados.Add(child);
+                visitados.Insert(0, child);
             }
 
-            while (visitados.Count > 0)
+            while (visitados.Any())
             {
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine(node.ToString());
-#endif
                 if (ProfundidadeRecursiva(visitados[0], match) != default(Node<T>)) return visitados[0];
                 visitados.RemoveAt(0);
             }
@@ -201,9 +191,7 @@ namespace TreeStructure
             {
                 node = fila.Dequeue();
 
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine(node.ToString());
-#endif
+                System.Console.WriteLine(node.ToString());
 
                 if (match(node)) return node;
 
